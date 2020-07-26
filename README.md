@@ -17,10 +17,4 @@ pip install -e .[dev]
 
 ## usage
 
-how to call say_hello:
-```python
-import mf
-
-response = mf.say_hello(name='Joe')
-print(response)
-```
+@TODO: will be added
