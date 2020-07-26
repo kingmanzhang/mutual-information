@@ -7,7 +7,7 @@ with open('./README.md', 'r') as f:
 
 setup(
     name='mutual_information',
-    version='0.0.1',
+    version='0.0.2',
     description='mutual information-based synergy between variables for one response',
     py_modules=["mf"],
     package_dir={'': 'src/python'},
@@ -15,6 +15,10 @@ setup(
     long_description_content_type='text/markdown',
     install_requires=[
         "numpy ~= 1.7",
+        "pandas ~= 0.24",
+        "networkx ~= 2.2",
+        "treelib ~= 1.5.5"
+
     ],
     extras_require={
         "dev" : [

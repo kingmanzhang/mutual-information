@@ -8,6 +8,9 @@ check-manifest = "*"
 
 [packages]
 numpy = "~=1.17"
+pandas = "~=0.24"
+networkx = "~=2.2"
+treelib = "~=1.5.5"
 
 [requires]
 python_version = "3.7"
