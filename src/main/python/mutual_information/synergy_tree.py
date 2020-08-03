@@ -5,7 +5,9 @@ import numpy as np
 import pickle
 import copy
 import sys
-import logging
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 
 class SynergyTree:
@@ -172,7 +174,7 @@ def populate_syn_tree(tree, parent, current, mf_dict,
 
     # Important: set it slight below zero to avoid finding no partition at all (
     # when all
-    #  mf of subsets is zero)
+    #  mutual_information of subsets is zero)
     mf_max_subset = -0.0000001
     # We should test all possible disjoint series,
     # instead of just testing bi-partitions.
@@ -326,7 +328,7 @@ def trim_edges(conditional_mf_network, hpo_network, threshold=0.8):
         because it is more specific in HPO tree. But we also know that it and v
         carries less mutual information to disease than (v, w), so have a
         desire to keep w. In the end, we define a threshold (0 - 1): as
-        along as the descendant carries a certain fraction of mf, we choose
+        along as the descendant carries a certain fraction of mutual_information, we choose
         it over its ancestor (w).
     :param conditional_mf_network: a network of mutual information
     conditioned on a common variable
@@ -335,7 +337,7 @@ def trim_edges(conditional_mf_network, hpo_network, threshold=0.8):
     """
     # make a copy of original conditional_mf_network
     trimmed = copy.deepcopy(conditional_mf_network)
-    ordered_edges = sorted(conditional_mf_network.edges.data('mf'),
+    ordered_edges = sorted(conditional_mf_network.edges.data('mutual_information'),
                            key=lambda edge: edge[2], reverse=True)
     # find the first edge from the remaining_edges that is still a valid edge
     #  in the conditional_mf_network
@@ -346,28 +348,28 @@ def trim_edges(conditional_mf_network, hpo_network, threshold=0.8):
 
         # check both nodes:
         # for each node, check neighbors:
-        #   if neighbor is ancestor of the other node and the mf is
+        #   if neighbor is ancestor of the other node and the mutual_information is
         # smaller, remove the node
-        #   if neighbor is descendant of the other node and the mf is
+        #   if neighbor is descendant of the other node and the mutual_information is
         # still above a threshold (percentage), remove the current edge;
         # otherwise, remove the descendant
         if v not in remove_list:
             for neighbor in trimmed.adj[v].keys():
-                mf_edge = trimmed[v][neighbor]['mf']
+                mf_edge = trimmed[v][neighbor]['mutual_information']
                 # check whether the edge is waiting to be analyzed
                 if (v, neighbor, mf_edge) in ordered_edges:
                     # note: to find ancestors of an ontology term,
                     # use networkx descendants
                     if neighbor in nx.descendants(hpo_network, w):
                         remove_list.add(neighbor)
-                        logging.info('worse ancestor detected: {} for {}, '
+                        logger.info('worse ancestor detected: {} for {}, '
                                      'remove {}'.format(neighbor, w, neighbor))
                     if w in nx.descendants(hpo_network, neighbor) and \
                             mf_edge/mf > threshold:
                         remove_list.add(w)
         if w not in remove_list:
             for neighbor in trimmed.adj[w].keys():
-                mf_edge = trimmed[w][neighbor]['mf']
+                mf_edge = trimmed[w][neighbor]['mutual_information']
                 # check whether the edge is waiting to be analyzed
                 if (w, neighbor, mf_edge) in ordered_edges:
                     if neighbor in nx.descendants(hpo_network, v):

@@ -1,15 +1,12 @@
 import numpy as np
-import mf
 import multiprocessing
 import os
 import os.path
-import logging.config
+from mutual_information import mf
+from logging import getLogger
 
 
-log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                             'log_config.conf')
-logging.config.fileConfig(log_file_path)
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
 
 
 class MutualInfoRandomizer:
@@ -160,10 +157,10 @@ def synergy_random(disease_prevalence, phenotype_prob1, phenotype_prob2,
     if seed is not None:
         np.random.seed(seed)
     mocked_XYz = mf.SummaryXYz(X_names=np.arange(len(phenotype_prob1)),
-                        Y_names=np.arange(len(phenotype_prob2)),
-                        z_name='mocked')
+                               Y_names=np.arange(len(phenotype_prob2)),
+                               z_name='mocked')
     mocked_XY = mf.SummaryXY(X_names=np.arange(len(phenotype_prob1)),
-                        Y_names=np.arange(len(phenotype_prob2)))
+                             Y_names=np.arange(len(phenotype_prob2)))
     BATCH_SIZE = 100
     M1 = len(phenotype_prob1)
     M2 = len(phenotype_prob2)

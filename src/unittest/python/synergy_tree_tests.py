@@ -1,9 +1,8 @@
 import unittest
-import synergy_tree
 import treelib
 import networkx as nx
 import time
-import pickle
+from mutual_information import synergy_tree
 
 
 class TestSynergyTree(unittest.TestCase):
@@ -57,7 +56,7 @@ class TestSynergyTree(unittest.TestCase):
         syn_tree = treelib.Tree()
         root_id = tuple(sorted(var_set))
         syn_tree = synergy_tree.populate_syn_tree(syn_tree, None, root_id,
-                                                   mf_dict)
+                                                  mf_dict)
         #syn_tree.show()
 
     def test_SynergyTree(self):
@@ -120,21 +119,21 @@ class TestSynergyTree(unittest.TestCase):
 
         self.assertEqual(serie, serie2)
 
-        serie3 = synergy_tree.DisjointSerie([('a','b'), ('c', 'd')])
+        serie3 = synergy_tree.DisjointSerie([('a', 'b'), ('c', 'd')])
         self.assertNotEqual(serie, serie3)
 
     def test_bit_array(self):
         decimal = 11
         self.assertEqual(synergy_tree.bit_array(decimal, 8), [0, 0, 0, 0, 1,
-                                                               0, 1, 1])
+                                                              0, 1, 1])
 
     def test_complement_pairs2(self):
         variables = [1, 2]
         self.assertEqual(len(synergy_tree.complement_pairs2(variables,
-                                                             True)), 2)
+                                                            True)), 2)
         variables = [1, 2, 3, 4]
         self.assertEqual(len(synergy_tree.complement_pairs2(variables,
-                                                             True)), 8)
+                                                            True)), 8)
 
     def test_create_network(self):
         ebunch = [(1,2, {'weight': 0.5}),
@@ -156,11 +155,11 @@ class TestSynergyTree(unittest.TestCase):
         # print(mocked_hpo.edges)
 
         conditional_mf_network = nx.Graph()
-        edges = [('HP:1', 'HP:2', {'mf': 0.5}),
-                 ('HP:1', 'HP:3', {'mf': 0.7}),
-                 ('HP:1', 'HP:4', {'mf': 0.3}),
-                 ('HP:1', 'HP:5', {'mf': 0.1}),
-                 ('HP:5', 'HP:2', {'mf': 0.2})]
+        edges = [('HP:1', 'HP:2', {'mutual_information': 0.5}),
+                 ('HP:1', 'HP:3', {'mutual_information': 0.7}),
+                 ('HP:1', 'HP:4', {'mutual_information': 0.3}),
+                 ('HP:1', 'HP:5', {'mutual_information': 0.1}),
+                 ('HP:5', 'HP:2', {'mutual_information': 0.2})]
         conditional_mf_network.add_edges_from(edges)
         # print(conditional_mf_network.adj)
 

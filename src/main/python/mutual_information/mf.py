@@ -1,12 +1,5 @@
 import numpy as np
 import pandas as pd
-import os
-import logging.config
-
-log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                             'log_config.conf')
-logging.config.fileConfig(log_file_path)
-logger = logging.getLogger(__name__)
 
 
 class SummaryXY:
@@ -144,7 +137,7 @@ class MutualInfoXY:
         p1 = np.repeat(self.X_names, self.M2)
         p2 = np.tile(self.Y_names, [self.M1])
         mf_value = self.mf().ravel()
-        df = pd.DataFrame(data={'P1': p1, 'P2': p2, 'mf': mf_value})
+        df = pd.DataFrame(data={'P1': p1, 'P2': p2, 'mutual_information': mf_value})
         return df
 
     def entropies(self):

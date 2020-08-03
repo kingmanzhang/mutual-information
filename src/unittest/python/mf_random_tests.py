@@ -1,10 +1,9 @@
-import mf
-import mf_random
 import unittest
 import numpy as np
 from os import path
 import pickle
 import tempfile
+from mutual_information import mf, mf_random
 
 
 class TestMFRandom(unittest.TestCase):
@@ -38,10 +37,10 @@ class TestMFRandom(unittest.TestCase):
         sample_per_simulation = 500
         simulations = 100
         distribution = mf_random.create_empirical_distribution(diag_prevalence,
-                                                        phenotype_prob,
-                                                        phenotype_prob,
-                                                        sample_per_simulation,
-                                                        simulations)
+                                                               phenotype_prob,
+                                                               phenotype_prob,
+                                                               sample_per_simulation,
+                                                               simulations)
         self.assertEqual(list(distribution['mf_XY_omit_z'].shape),
                          [10, 10, 100])
         self.assertEqual(list(distribution['mf_Xz'].shape), [10, 100])
@@ -76,14 +75,14 @@ class TestMFRandom(unittest.TestCase):
                          'failed')
 
         self.assertRaises(ValueError, lambda: mf_random.p_value_estimate(query,
-                                            ordered, alternative='e'))
+                                                                         ordered, alternative='e'))
 
     def test_synergy_random(self):
         disease_prevalence = 0.4
         phenotype_prob = np.random.uniform(0, 1, 10)
         sample_per_simulation = 5000
         S = mf_random.synergy_random(disease_prevalence, phenotype_prob,
-                 phenotype_prob, sample_per_simulation)['synergy']
+                                     phenotype_prob, sample_per_simulation)['synergy']
         np.testing.assert_almost_equal(S, np.zeros(S.shape), decimal=3)
 
     def test_serializing_instance(self):

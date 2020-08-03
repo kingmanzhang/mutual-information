@@ -1,8 +1,8 @@
 import unittest
-import mf
 import numpy as np
 import math
 import tempfile
+from mutual_information import mf
 
 
 class TestMF(unittest.TestCase):
@@ -210,7 +210,7 @@ class TestMF(unittest.TestCase):
         disease_name = 'MONDO:heart failure'
         pl = np.array(['HP:001', 'HP:002', 'HP:003'])
         heart_failure = mf.SummaryXYz(X_names=pl, Y_names=pl,
-                                         z_name=disease_name)
+                                      z_name=disease_name)
         self.assertEqual(heart_failure.z_name, 'MONDO:heart failure')
         self.assertEqual(heart_failure.vars_labels['set1'].tolist(),
                          pl.tolist())
@@ -239,7 +239,7 @@ class TestMF(unittest.TestCase):
         # test that we retrieved the correct mutual information between X and
         #  Y from summary statistics of XYz
         summary_XY = mf.SummaryXY(X_names=['HP:001', 'HP:002', 'HP:003', 'HP:004'],
-            Y_names=['HP:001', 'HP:002', 'HP:003', 'HP:004'])
+                                  Y_names=['HP:001', 'HP:002', 'HP:003', 'HP:004'])
         summary_XY.add_batch(self.P, self.P)
         mf_XY = mf.MutualInfoXY(summary_XY).mf()
         np.testing.assert_array_equal(mf_XY,
