@@ -263,6 +263,5 @@ class TestMF(unittest.TestCase):
         self.assertEqual(heart_failure.control_N, 6)
 
 
-
 if __name__ == '__main__':
     unittest.main()

@@ -10,10 +10,29 @@ install from pypi:
 pip install mutual-information
 ```
 
-install from source (dev mode):
-```bash
-pip install -e .[dev]
+## how to contribute
+activate virtual environment:
+We recommend using pipenv to manage virtual environment, and pybuilder to build packages.
+
+To activate the virtual environment, within this repo
 ```
+pip install pipenv
+pipenv shell
+pipenv install --dev
+```
+
+If you use Pycharm, the virtual environment should be auto-activated.
+
+To run unittests
+```bash
+pyb run_unit_tests
+```
+
+To build the package
+```bash
+pyb
+```
+
 
 ## usage
 

@@ -27,6 +27,6 @@ def set_properties(project):
     project.depends_on("treelib")
 
     project.set_property("coverage_threshold_warn", 50)
-    project.set_property("coverage_break_build", True)
+    project.set_property("coverage_break_build", False)
 
     project.get_property("distutils_commands").append("bdist_wheel")
