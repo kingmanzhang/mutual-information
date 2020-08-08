@@ -14,7 +14,7 @@ with open('./README.md', 'r') as f:
     long_description = f.read()
 long_description_content_type = 'text/markdown'
 url = 'https://github.com/kingmanzhang/mutual-information'
-version = '0.0.3'
+version = '0.0.4'
 license = 'MIT'
 
 default_task = "publish"

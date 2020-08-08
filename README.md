@@ -11,7 +11,7 @@ pip install mutual-information
 ```
 
 ## how to contribute
-activate virtual environment:
+
 We recommend using pipenv to manage virtual environment, and pybuilder to build packages.
 
 To activate the virtual environment, within this repo
