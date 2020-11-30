@@ -294,7 +294,7 @@ class MutualInfoXYz:
         df['mf_conditional'] = self.mutual_info_XY_given_z().flat
         df['synergy'] = self.synergy_XY2z().flat
         df['mf_Xz'] = np.repeat(self.mutual_info_Xz().flat, self.M2)
-        df['mf_Yz'] = np.tile(self.mutual_info_Yz().flat, [self.M2])
+        df['mf_Yz'] = np.tile(self.mutual_info_Yz().flat, [self.M1])
         return df
 
     def synergy_XY2z_df(self):
